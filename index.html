@@ -15,8 +15,29 @@
 				<md-icon class="mdi mdi-plus-circle-outline"></md-icon>
 				New Classified
 			</md-button>
+
+			<md-button ng-click="showFilters = true">
+				<md-icon class="mdi mdi-magnify"></md-icon>
+				Filters
+			</md-button>
 		</div>
 	</md-toolbar>
+
+	<div class="filters" layout="row" layout-align="center center" ng-show="showFilters">
+		<md-input-container>
+			<label>Enter Search Term</label>
+			<input type="text" ng-model="classCtrl.classifiedsFilter">
+		</md-input-container>
+
+		<md-input-container>
+			<label>Category</label>
+			<md-select ng-model="classCtrl.classifiedsFilter">
+				<md-option ng-repeat="category in classCtrl.categories" value="{{category}}">
+					{{category}}
+				</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
 
 	<md-sidenav class="md-sidenav-left md-whiteframe-z2" 
 		md-component-id="left">
@@ -44,21 +65,24 @@
 			    	<label for="image">Image Link</label>
 			    	<input type="text" id="image" ng-model="classCtrl.classified.image" >
 			  	</md-input-container>
-			    <md-button ng-click="classCtrl.saveClassified(classCtrl.classified)"" class="md-primary">
+			    <md-button ng-if="!classCtrl.editing" ng-click="classCtrl.saveClassified(classCtrl.classified)" class="md-primary">
 			    	Save
 			  	</md-button>
-			  	<md-button class="md-primary">
+			  	<md-button ng-if="classCtrl.editing" ng-click="classCtrl.saveEdit()" class="md-primary">
 			    	Save Edit
 			  	</md-button>
 			  	<md-button ng-click="classCtrl.closeSidebar()" class="md-warn">
 			    	Cancel
 			  	</md-button>
-			</form>
+		    </form>
 		</md-content>
 	</md-sidenav>
 
 	<md-content class="md-padding" layout="row" layout-wrap>
-		<md-card ng-repeat="classified in classCtrl.classifieds" flex="30">
+		<md-card ng-repeat="classified in classCtrl.classifieds | 
+							filter: classCtrl.classifiedsFilter |
+							filter: category" 
+							flex="30">
 			<img ng-src="{{ classified.image }}" alt="">
 			<md-card-content>
 				<div class="classified-info" ng-show="!showContact">
@@ -100,8 +124,8 @@
 				<div class="classified-admin" ng-if="showAdmin">
 					<h3>Admin</h3>
 					<div layout=row>
-						<md-button ng-click="editClassified(classified)" class="md-primary">Edit</md-button>
-						<md-button class="md-warn">Delete</md-button>
+						<md-button ng-click="classCtrl.editClassified(classified)" class="md-primary">Edit</md-button>
+						<md-button ng-click="classCtrl.deleteClassified($event, classified)" class="md-warn">Delete</md-button>
 					</div>
 				</div>
 			</md-card-content>
@@ -115,6 +139,6 @@
 	<script src="scripts/app.js"></script>
 	<script src="components/classifiedsFactory.js"></script>
 	<script src="components/classifiedsController.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 </body>	
 </html>
