@@ -2,8 +2,20 @@
 	
 	"use strict";
 
-	angular.module("ngClassifieds").controller("classifiedsCtrl", function(classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
+	angular.module("ngClassifieds").controller("classifiedsCtrl", function($state, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
 		var self = this;
+
+		self.openSidebar = openSidebar;
+		self.closeSidebar = closeSidebar;
+		self.saveClassified = saveClassified;
+		self.editClassified = editClassified;
+		self.saveEdit = saveEdit;
+		self.deleteClassified = deleteClassified;
+
+		self.classifieds;
+		self.categories;
+		self.editing
+		self.classified;
 
 		classifiedsFactory.getClassifieds().then(function(classifieds) {
 			self.classifieds = classifieds.data;
@@ -16,15 +28,15 @@
 			email: "dad@dad.com"
 		};
 
-		self.openSidebar = function() {
-			$mdSidenav("left").open();
+		function openSidebar() {
+			$state.go("classifieds.new");
 		};
 
-		self.closeSidebar = function() {
+		function closeSidebar() {
 			$mdSidenav("left").close();
 		};
 
-		self.saveClassified = function(classified) {
+		function saveClassified(classified) {
 			if (classified) {
 				classified.contact = contact;
 				self.classifieds.push(classified);
@@ -34,20 +46,20 @@
 			}
 		};
 
-		self.editClassified = function(classified) {
+		function editClassified(classified) {
 			self.editing = true;
-			self.openSidebar();
+			openSidebar();
 			self.classified = classified;
 		};
 
-		self.saveEdit = function() {
+		function saveEdit() {
 			self.editing = false;
 			self.classified = {};
-			self.closeSidebar();
+			closeSidebar();
 			showToast("Classified Edited!");
 		};
 
-		self.deleteClassified = function(event, classified) {
+		function deleteClassified(event, classified) {
 			var confirm = $mdDialog.confirm()
 				.title("Are you sure you want to delete " + classified.title + "?")
 				.ok("Yes")
