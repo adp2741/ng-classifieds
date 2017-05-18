@@ -19,7 +19,7 @@
 		});
 
 		function closeSidebar() {
-			self.sidenavOpen = true;
+			self.sidenavOpen = false;
 		}
 
 		function saveClassified(classified) {

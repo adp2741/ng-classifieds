@@ -17,5 +17,10 @@ angular
 				url: "/new",
 				templateUrl: "components/classifieds/new/classifiedsNewTemplate.html",
 				controller: "newClassifiedsCtrl as classCtrl"
+			})
+			.state("classifieds.edit", {
+				url: "/edit",
+				templateUrl: "components/classifieds/edit/classifiedsEditTemplate.html",
+				controller: "editClassifiedsCtrl as classCtrl"
 			});
 	});
