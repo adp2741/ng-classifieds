@@ -19,8 +19,11 @@ angular
 				controller: "newClassifiedsCtrl as classCtrl"
 			})
 			.state("classifieds.edit", {
-				url: "/edit",
+				url: "/edit/:id",
 				templateUrl: "components/classifieds/edit/classifiedsEditTemplate.html",
-				controller: "editClassifiedsCtrl as classCtrl"
+				controller: "editClassifiedsCtrl as classCtrl",
+				params: {
+					classified: null
+				}
 			});
 	});

@@ -2,7 +2,7 @@
 	md-component-id="left"
 	md-is-open=classCtrl.sidenavOpen>
 	<md-toolbar>
-		<h1 class="md-toolbar-tools">Add a Classified</h1>
+		<h1 class="md-toolbar-tools">Edit Classified</h1>
 	</md-toolbar>
 
 	<md-content layout-padding>
@@ -10,25 +10,22 @@
 		  	<md-input-container>
 		    	<label for="title">Title</label>
 		    	<input type="text" id="title"
-		    		ng-model="classified.title" 
+		    		ng-model="classCtrl.classified.title" 
 		    		md-autofocus>
 		  	</md-input-container>
 		 	<md-input-container>
 		    	<label for="price">Price</label>
-		    	<input type="text" id="price" ng-model="classified.price">
+		    	<input type="text" id="price" ng-model="classCtrl.classified.price">
 		  	</md-input-container>
 		 	<md-input-container>
 		    	<label for="description">Description</label>
-		    	<textarea type="text" id="description" ng-model="classified.description" ></textarea>
+		    	<textarea type="text" id="description" ng-model="classCtrl.classified.description"></textarea>
 		  	</md-input-container>
 		  	<md-input-container>
 		    	<label for="image">Image Link</label>
-		    	<input type="text" id="image" ng-model="classified.image">
+		    	<input type="text" id="image" ng-model="classCtrl.classified.image">
 		  	</md-input-container>
-		    <md-button ng-if="!classCtrl.editing" ng-click="classCtrl.saveClassified(classified)" class="md-primary">
-		    	Save
-		  	</md-button>
-		  	<md-button ng-if="classCtrl.editing" ng-click="classCtrl.saveEdit()" class="md-primary">
+		  	<md-button ng-click="classCtrl.saveEdit()" class="md-primary">
 		    	Save Edit
 		  	</md-button>
 		  	<md-button ng-click="classCtrl.closeSidebar()" class="md-warn">

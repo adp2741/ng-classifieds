@@ -23,15 +23,17 @@
 		}
 
 		function saveClassified(classified) {
-			classified.contact = {
-				name: "Andrew Perry",
-				phone: "(333) 333-3333",
-				email: "dad@dad.com"
-			};
-
 			if (classified) {
-				$scope.$emit("newClassified", classified);
-				self.sidenavOpen = false;
+				classified.contact = {
+					name: "Andrew Perry",
+					phone: "(333) 333-3333",
+					email: "dad@dad.com"
+				};
+
+				if (classified) {
+					$scope.$emit("newClassified", classified);
+					self.sidenavOpen = false;
+				}
 			}
 		}
 	});

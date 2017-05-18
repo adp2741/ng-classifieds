@@ -28,6 +28,11 @@
 			showToast("Classified Saved!");
 		});
 
+		$scope.$on("editSaved", function(event, message, classified) {
+			showToast(message);
+			alert(classified.price);
+		});
+
 		var contact = {
 			name: "Andrew Perry",
 			phone: "(333) 333-3333",
@@ -36,11 +41,11 @@
 
 		function openSidebar() {
 			$state.go("classifieds.new");
-		};
+		}
 
 		function closeSidebar() {
 			$mdSidenav("left").close();
-		};
+		}
 
 		function saveClassified(classified) {
 			if (classified) {
@@ -50,20 +55,21 @@
 				self.closeSidebar();
 				showToast("Classified Saved!");
 			}
-		};
+		}
 
 		function editClassified(classified) {
-			self.editing = true;
-			openSidebar();
-			self.classified = classified;
-		};
+			$state.go("classifieds.edit", {
+				id: classified.id,
+				classified: classified
+			});
+		}
 
 		function saveEdit() {
 			self.editing = false;
 			self.classified = {};
 			closeSidebar();
 			showToast("Classified Edited!");
-		};
+		}
 
 		function deleteClassified(event, classified) {
 			var confirm = $mdDialog.confirm()
@@ -77,7 +83,7 @@
 			}, function() {
 
 			});
-		};
+		}
 
 		function showToast(message) {
 			$mdToast.show(
