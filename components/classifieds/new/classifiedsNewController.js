@@ -1,23 +1,38 @@
 (function() {
 	"use strict";
 
-	angular.module("ngClassifieds").controller("newClassifiedsCtrl", function($scope, $mdSidenav, $timeout, $mdDialog, classifiedsFactory) {
+	angular.module("ngClassifieds").controller("newClassifiedsCtrl", function($scope, $state, $mdSidenav, $timeout, $mdDialog, classifiedsFactory) {
 		var self = this;
+		self.closeSidebar = closeSidebar;
+		self.saveClassified = saveClassified;
 
 		$timeout(function() {
 			$mdSidenav("left").open();
 		});
 
-		$scope.$watch("self.valueToChange", function(value) {
-			if (value ===2) {
-				console.log("value changed to " + value);
-			}
+		$scope.$watch(function() { return self.sidenavOpen; }, function(sidenav) {
+			if (sidenav === false) {
+				$mdSidenav("left").close().then(function() {
+					$state.go("classifieds");
+				});
+			} 
 		});
 
-		self.valueToChange = 1;
+		function closeSidebar() {
+			self.sidenavOpen = true;
+		}
 
-		$timeout(function() {
-			self.valueToChange = 2;
-		}, 2000);
+		function saveClassified(classified) {
+			classified.contact = {
+				name: "Andrew Perry",
+				phone: "(333) 333-3333",
+				email: "dad@dad.com"
+			};
+
+			if (classified) {
+				$scope.$emit("newClassified", classified);
+				self.sidenavOpen = false;
+			}
+		}
 	});
 }());

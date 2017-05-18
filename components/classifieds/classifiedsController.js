@@ -2,7 +2,7 @@
 	
 	"use strict";
 
-	angular.module("ngClassifieds").controller("classifiedsCtrl", function($state, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
+	angular.module("ngClassifieds").controller("classifiedsCtrl", function($scope, $state, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
 		var self = this;
 
 		self.openSidebar = openSidebar;
@@ -20,6 +20,12 @@
 		classifiedsFactory.getClassifieds().then(function(classifieds) {
 			self.classifieds = classifieds.data;
 			self.categories = getCategories(self.classifieds);
+		});
+
+		$scope.$on("newClassified", function(event, classified) {
+			classified.id = self.classifieds.length + 1;
+			self.classifieds.push(classified);
+			showToast("Classified Saved!");
 		});
 
 		var contact = {
