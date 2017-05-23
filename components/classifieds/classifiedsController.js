@@ -60,7 +60,6 @@
 		function editClassified(classified) {
 			$state.go("classifieds.edit", {
 				id: classified.id,
-				classified: classified
 			});
 		}
 
